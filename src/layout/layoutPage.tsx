@@ -8,7 +8,7 @@ const LayoutPage: React.FC = () => {
       style={{ backgroundColor: '#FCFAF7' }}
       className="w-full m-auto h-screen flex justify-center items-center"
     >
-      <div className="bg-white w-11/12 mx-auto shadow-md rounded-lg flex flex-col h-full">
+      <div className="bg-white w-full sm:w-11/12 mx-auto shadow-md rounded-lg flex flex-col h-full">
         <Navbar />
         <div
           className="flex flex-col justify-center items-center overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ee7f2b] scrollbar-track-white scroll-smooth custom-scrollbar"

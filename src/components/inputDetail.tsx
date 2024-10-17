@@ -1,15 +1,21 @@
 import clsx from 'clsx';
 import React from 'react';
 import { GenerateRecipeRequest } from '../DataTransfer/Recipe/GenerateRecipeRequest';
+import { photoApi } from '../https/photoApi';
 import { recipeApi } from '../https/recipeApi';
+import { RecipeCard } from './recipeCards';
 interface InputDetailProps {
   selectedIngredients: string[];
   onRemoveIngredient: (ingredient: string) => void;
+  onUpdateRecipes: (recipes: RecipeCard[]) => void;
+  setLoading: (loading: boolean) => void;
 }
 
 const InputDetail: React.FC<InputDetailProps> = ({
   selectedIngredients,
   onRemoveIngredient,
+  onUpdateRecipes,
+  setLoading,
 }) => {
   const [inputValue, setInputValue] = React.useState('');
   const [type, setType] = React.useState('西式');
@@ -25,6 +31,7 @@ const InputDetail: React.FC<InputDetailProps> = ({
   };
 
   const generateRecipe = async () => {
+    setLoading(true);
     const request: GenerateRecipeRequest = {
       ingredients: selectedIngredients.join(' '),
       type: type,
@@ -34,6 +41,20 @@ const InputDetail: React.FC<InputDetailProps> = ({
     };
     const response = await recipeApi.generateRecipe(request);
     console.log(response);
+    const recipeCards = await Promise.all(
+      response.map(async (recipe) => {
+        const photoUrl = await photoApi.getDishPhoto(recipe.dishName);
+        return {
+          name: recipe.dishName,
+          ingredients: recipe.ingredients.join(', '),
+          instructions: recipe.instructions,
+          image: photoUrl,
+        } as RecipeCard;
+      })
+    );
+    console.log(recipeCards);
+    onUpdateRecipes(recipeCards);
+    setLoading(false);
   };
 
   return (
