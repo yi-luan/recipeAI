@@ -1,14 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
-declare global {
-  interface Window {
-    _env_: {
-      REACT_APP_API_BASE_URL: string;
-    };
-  }
-}
 
 const axiosInstance = axios.create({
-  baseURL: window._env_?.REACT_APP_API_BASE_URL || 'http://localhost:3008',
+  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:3008',
   headers: {
     'Content-Type': 'application/json',
   },
