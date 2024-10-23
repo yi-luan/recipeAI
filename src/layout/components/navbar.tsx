@@ -10,6 +10,7 @@ const Navbar: React.FC = () => {
             src={logo}
             alt="Logo"
             className="text-black no-underline text-2xl font-bold h-90px"
+            style={{ height: '90px' }}
           />
         </a>
       </div>
