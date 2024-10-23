@@ -27,7 +27,7 @@ const Content: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-full gap-10 p-10">
+    <div className="flex flex-col w-full h-full gap-10 sm:p-5 md:p-6 lg:p-8">
       <div className="flex flex-col w-full h-full gap-10 sm:p-6 md:p-8 lg:p-10">
         <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-96 flex justify-center items-center rounded-lg overflow-hidden">
           <img

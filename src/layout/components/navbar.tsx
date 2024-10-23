@@ -1,19 +1,20 @@
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PublicIcon from '@mui/icons-material/Public';
-import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
-import { Button, TextField } from '@mui/material';
 import React from 'react';
+import logo from '../../assets/RecipeAI-logo.png';
 
 const Navbar: React.FC = () => {
   return (
     <nav className="navbar flex justify-between items-center p-4 gap-4 w-full text-black border-b border-gray-100 bg-white rounded-t-lg">
-      <div className="navbar-logo ml-10">
-        <a href="/" className="text-black no-underline text-2xl font-bold">
-          Logo
+      <div className="navbar-logo sm:ml-auto sm:mr-auto">
+        <a href="/">
+          <img
+            src={logo}
+            alt="Logo"
+            className="text-black no-underline text-2xl font-bold h-90px"
+          />
         </a>
       </div>
 
-      <div className="navbar-links flex gap-4">
+      {/* <div className="navbar-links flex gap-4">
         <Button
           href="/function1"
           startIcon={<RestaurantMenuIcon />}
@@ -102,7 +103,7 @@ const Navbar: React.FC = () => {
             Signup
           </button>
         </a>
-      </div>
+      </div> */}
     </nav>
   );
 };
