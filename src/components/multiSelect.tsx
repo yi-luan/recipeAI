@@ -66,9 +66,9 @@ const MultiSelect: React.FC<MultiSelectProps> = ({ handleSearch }) => {
             onKeyDown={handleKeyDown}
           />
         </div>
-        <div className="flex-shrink-0 flex items-center justify-center rounded-r-xl border-l-0 border border-[#e7dacf] bg-[#fcfaf8] pr-[7px] pl-3">
+        <div className="flex-shrink-0 flex items-center justify-center rounded-r-xl border-l-0 border border-[#e7dacf] bg-[#fcfaf8] pr-[1px]">
           <button
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-full h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#ee7f2b] text-[#1b130d] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
+            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-r-xl h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#ee7f2b] text-[#1b130d] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
             onClick={() => handleSearch(items)}
           >
             <span className="truncate">Search</span>
