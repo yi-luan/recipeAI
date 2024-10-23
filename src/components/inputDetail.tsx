@@ -86,13 +86,37 @@ const InputDetail: React.FC<InputDetailProps> = ({
               </span>
             ))}
           </div>
-          <input
-            className="form-input w-full rounded-xl border border-[#e7dacf] p-2 text-sm focus:border-[#ee7f2b] focus:ring-[#ee7f2b]"
-            placeholder="輸入食材"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
+          <div className="flex items-center w-full relative">
+            <input
+              className="form-input w-full rounded-xl border border-[#e7dacf] p-2 text-sm focus:border-[#ee7f2b] focus:ring-[#ee7f2b]"
+              placeholder="輸入食材"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={handleKeyDown}
+              style={{ position: 'relative', zIndex: 1 }}
+            />
+            <button
+              onClick={() => {
+                if (inputValue.trim() !== '') {
+                  selectedIngredients.push(inputValue.trim());
+                  setInputValue('');
+                }
+              }}
+              className="absolute right-0 rounded-full text-[#ee7f2b] text-base font-bold"
+              style={{
+                position: 'absolute',
+                zIndex: 2,
+                top: '50%',
+                right: 0,
+                transform: 'translateY(-50%)',
+                fontSize: '1.5rem', // 增加字體大小
+                padding: '0.5rem 1rem', // 增加padding
+                width: 'auto', // 自適應寬度
+              }}
+            >
+              +
+            </button>
+          </div>
         </div>
         <div className="mb-5">
           <label className="block text-sm font-medium text-[#9a6e4c] mb-2">
