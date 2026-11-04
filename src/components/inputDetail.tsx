@@ -40,7 +40,6 @@ const InputDetail: React.FC<InputDetailProps> = ({
       desert: needDessert,
     };
     const response = await recipeApi.generateRecipe(request);
-    console.log(response);
     const recipeCards = await Promise.all(
       response.map(async (recipe) => {
         const photoUrl = await photoApi.getDishPhoto(recipe.dishName);
@@ -52,7 +51,6 @@ const InputDetail: React.FC<InputDetailProps> = ({
         } as RecipeCard;
       })
     );
-    console.log(recipeCards);
     onUpdateRecipes(recipeCards);
     setLoading(false);
   };

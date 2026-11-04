@@ -1,8 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
 const apiBaseUrl =
-  import.meta.env.VITE_APP_API_BASE_URL || 'http://localhost:3008';
-console.log('API Base URL:', apiBaseUrl);
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
 
 const axiosInstance = axios.create({
   baseURL: apiBaseUrl,
