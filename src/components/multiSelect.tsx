@@ -8,73 +8,93 @@ const MultiSelect: React.FC<MultiSelectProps> = ({ handleSearch }) => {
   const [items, setItems] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState('');
 
+  const addItem = (value: string) => {
+    const trimmed = value.trim();
+    if (trimmed === '' || items.includes(trimmed)) return items;
+    const next = [...items, trimmed];
+    setItems(next);
+    return next;
+  };
+
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && inputValue.trim() !== '') {
-      setItems([...items, inputValue.trim()]);
+    // Ignore Enter while an IME (e.g. Zhuyin) is composing a word.
+    if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
+      event.preventDefault();
+      addItem(inputValue);
       setInputValue('');
+    } else if (
+      event.key === 'Backspace' &&
+      inputValue === '' &&
+      items.length > 0
+    ) {
+      setItems(items.slice(0, -1));
     }
   };
 
-  const removeItem = (
-    event: React.MouseEvent<HTMLButtonElement>,
-    text: string
-  ) => {
-    event.preventDefault();
-    event.stopPropagation();
+  const removeItem = (text: string) => {
     setItems(items.filter((item) => item !== text));
   };
 
+  const submit = () => {
+    // Include whatever is still in the text box so a click on Search
+    // doesn't silently drop the last ingredient.
+    const next = addItem(inputValue);
+    setInputValue('');
+    handleSearch(next);
+  };
+
   return (
-    <div className="multi-select w-full">
-      <div className="relative flex h-full w-full items-stretch rounded-xl">
-        <div
-          className="flex shrink-0 items-center justify-center rounded-l-xl border border-r-0 border-[#e7dacf] bg-[#fcfaf8] pr-4 pl-[15px] text-[#9a6e4c]"
-          data-icon="MagnifyingGlass"
-          data-size="20px"
-          data-weight="regular"
+    <div
+      role="search"
+      className="flex w-full items-stretch overflow-hidden rounded-xl border border-[#e7dacf] bg-[#fcfaf8] text-left focus-within:ring-2 focus-within:ring-[#ee7f2b]/60"
+    >
+      <div
+        className="flex shrink-0 items-center justify-center pr-2 pl-4 text-[#9a6e4c]"
+        aria-hidden="true"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          fill="currentColor"
+          viewBox="0 0 256 256"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20px"
-            height="20px"
-            fill="currentColor"
-            viewBox="0 0 256 256"
-          >
-            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
-          </svg>
-        </div>
-        <div className="custom-scrollbar flex flex-1 scrollbar-thin scrollbar-thumb-[#ee7f2b] scrollbar-track-white items-center overflow-x-auto overflow-y-hidden scroll-smooth rounded-xl rounded-l-none rounded-r-none border border-[#e7dacf] bg-[#fcfaf8] p-3">
-          {items.map((item, index) => (
-            <span
-              key={index}
-              className="my-1 mr-1 inline-flex shrink-0 scrollbar-thin items-center rounded-full bg-[#e7dacf] px-2 py-1 text-sm text-[#1b130d]"
-            >
-              {item}
-              <button
-                onClick={(e) => removeItem(e, item)}
-                className="ml-1 text-[#9a6e4c] hover:text-[#1b130d]"
-              >
-                ×
-              </button>
-            </span>
-          ))}
-          <input
-            placeholder={'Enter ingredients, recipes, or cuisines'}
-            className="h-full min-w-[50px] flex-1 bg-transparent px-2 text-sm leading-normal font-normal text-[#1b130d] placeholder:text-[#9a6e4c] focus:outline-hidden @[480px]:text-base @[480px]:leading-normal @[480px]:font-normal"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-        </div>
-        <div className="flex shrink-0 items-center justify-center rounded-r-xl border border-l-0 border-[#e7dacf] bg-[#fcfaf8] pr-[1px]">
-          <button
-            className="flex h-10 max-w-[480px] min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-r-xl bg-[#ee7f2b] px-4 text-sm leading-normal font-bold tracking-[0.015em] text-[#1b130d] @[480px]:h-12 @[480px]:px-5 @[480px]:text-base @[480px]:leading-normal @[480px]:font-bold @[480px]:tracking-[0.015em]"
-            onClick={() => handleSearch(items)}
-          >
-            <span className="truncate">Search</span>
-          </button>
-        </div>
+          <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
+        </svg>
       </div>
+      <div className="custom-scrollbar flex min-w-0 flex-1 items-center overflow-x-auto py-2">
+        {items.map((item) => (
+          <span
+            key={item}
+            className="mr-1 inline-flex shrink-0 items-center rounded-full bg-[#e7dacf] py-1 pr-1 pl-3 text-sm text-[#1b130d]"
+          >
+            {item}
+            <button
+              type="button"
+              onClick={() => removeItem(item)}
+              aria-label={`移除 ${item}`}
+              className="ml-1 flex h-5 w-5 items-center justify-center rounded-full text-[#9a6e4c] hover:bg-[#d9c8ba] hover:text-[#1b130d]"
+            >
+              ×
+            </button>
+          </span>
+        ))}
+        <input
+          aria-label="輸入食材，按 Enter 加入"
+          placeholder={items.length === 0 ? 'Enter ingredients' : ''}
+          className="h-full min-w-[80px] flex-1 bg-transparent px-2 text-sm text-[#1b130d] placeholder:text-[#9a6e4c] focus:outline-hidden sm:text-base"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+      </div>
+      <button
+        type="button"
+        className="shrink-0 bg-[#ee7f2b] px-4 text-sm font-bold text-[#1b130d] transition-colors hover:bg-[#f19a55] sm:px-5 sm:text-base"
+        onClick={submit}
+      >
+        Search
+      </button>
     </div>
   );
 };

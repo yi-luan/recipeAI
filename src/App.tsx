@@ -1,12 +1,5 @@
-import './App.css';
 import LayoutPage from './layout/layoutPage';
 
-const App = () => {
-  return (
-    <>
-      <LayoutPage />
-    </>
-  );
-};
+const App = () => <LayoutPage />;
 
 export default App;

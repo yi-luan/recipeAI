@@ -4,20 +4,12 @@ import Navbar from './components/navbar';
 
 const LayoutPage: React.FC = () => {
   return (
-    <div
-      style={{ backgroundColor: '#FCFAF7' }}
-      className="m-auto flex h-screen w-full items-center justify-center"
-    >
-      <div className="mx-auto flex h-full w-full flex-col rounded-lg bg-white shadow-md sm:w-11/12">
+    <div className="min-h-screen w-full bg-[#fcfaf7] sm:py-6">
+      <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col bg-white shadow-md sm:min-h-0 sm:w-11/12 sm:rounded-lg">
         <Navbar />
-        <div
-          className="custom-scrollbar flex scrollbar-thin scrollbar-thumb-[#ee7f2b] scrollbar-track-white flex-col items-center justify-center overflow-y-scroll scroll-smooth"
-          style={{
-            scrollMarginLeft: '1rem',
-          }}
-        >
+        <main className="w-full">
           <Content />
-        </div>
+        </main>
       </div>
     </div>
   );

@@ -19,4 +19,11 @@ export const antdTheme: ThemeConfig = {
     colorBorder: colors.border,
     borderRadius: 8,
   },
+  components: {
+    Button: {
+      // Dark text on the orange brand colour keeps WCAG AA contrast.
+      primaryColor: colors.text,
+      primaryShadow: 'none',
+    },
+  },
 };
