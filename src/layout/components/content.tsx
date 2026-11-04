@@ -1,4 +1,4 @@
-import CircularProgress from '@mui/material/CircularProgress';
+import { Spin } from 'antd';
 import React, { useRef, useState } from 'react';
 import cookingChefBanner from '../../assets/cookingchef-banner.jpg';
 import InputDetail from '../../components/inputDetail';
@@ -70,11 +70,7 @@ const Content: React.FC = () => {
 
       {loading && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/50">
-          <CircularProgress
-            size={60}
-            thickness={5}
-            style={{ color: '#ee7f2b' }}
-          />
+          <Spin size="large" />
         </div>
       )}
     </div>

@@ -1,5 +1,4 @@
-import NoFoodIcon from '@mui/icons-material/NoFood';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+import { Card, Empty, Typography } from 'antd';
 
 export interface RecipeCard {
   name: string;
@@ -12,6 +11,8 @@ interface RecipeCardsProps {
   recipes: RecipeCard[];
 }
 
+const { Title, Text } = Typography;
+
 const RecipeCards: React.FC<RecipeCardsProps> = ({ recipes }) => {
   return (
     <div className="mt-10">
@@ -20,49 +21,41 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({ recipes }) => {
           {recipes.map((recipe, index) => (
             <Card
               key={index}
-              className="flex flex-col rounded-lg"
-              style={{
-                boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
-                height: '400px',
-              }}
+              className="flex h-[400px] flex-col overflow-hidden rounded-lg shadow-[0_8px_16px_rgba(0,0,0,0.2)]"
+              cover={
+                <img
+                  src={recipe.image}
+                  alt={recipe.name}
+                  className="h-[200px] w-full object-cover"
+                />
+              }
+              styles={{ body: { padding: 16, overflow: 'auto', flex: 1 } }}
+              classNames={{ body: 'custom-scrollbar' }}
             >
-              <CardMedia
-                component="img"
-                height="200"
-                image={recipe.image}
-                alt={recipe.name}
-                className="rounded-t-lg object-cover"
-                style={{ height: '200px' }}
-              />
-              <CardContent className="custom-scrollbar grow overflow-auto">
-                <Typography gutterBottom variant="h6" component="div">
-                  {recipe.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  食材：{recipe.ingredients || '無資料'}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  做法：
-                  {recipe.instructions && recipe.instructions.length > 0 ? (
-                    <ul>
-                      {recipe.instructions.map((instruction, index) => (
-                        <li key={index}>{instruction}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    '無資料'
-                  )}
-                </Typography>
-              </CardContent>
+              <Title level={5} className="mt-0!">
+                {recipe.name}
+              </Title>
+              <Text type="secondary" className="block text-sm">
+                食材：{recipe.ingredients || '無資料'}
+              </Text>
+              <Text type="secondary" className="block text-sm">
+                做法：
+                {recipe.instructions && recipe.instructions.length > 0 ? (
+                  <ul>
+                    {recipe.instructions.map((instruction, index) => (
+                      <li key={index}>{instruction}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  '無資料'
+                )}
+              </Text>
             </Card>
           ))}
         </div>
       ) : (
         <div className="flex h-52 items-center justify-center">
-          <NoFoodIcon className="mr-2 text-5xl text-[#9a6e4c]" />
-          <Typography variant="h6" color="text.secondary" className="ml-2">
-            沒有可用的食譜
-          </Typography>
+          <Empty description="沒有可用的食譜" />
         </div>
       )}
     </div>

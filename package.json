@@ -13,10 +13,7 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@mui/icons-material": "^6.5.0",
-    "@mui/material": "^6.5.0",
+    "@ant-design/cssinjs": "^2.1.2",
     "antd": "^6.7.0",
     "axios": "^1.21.0",
     "clsx": "^2.1.1",
