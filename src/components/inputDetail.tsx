@@ -57,10 +57,10 @@ const InputDetail: React.FC<InputDetailProps> = ({
 
   return (
     <div>
-      <div className="text-[#1b130d] font-bold mb-5 text-lg">填寫詳細資料</div>
+      <div className="mb-5 text-lg font-bold text-[#1b130d]">填寫詳細資料</div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="mb-5">
-          <label className="block text-sm font-medium text-[#9a6e4c] mb-2">
+          <label className="mb-2 block text-sm font-medium text-[#9a6e4c]">
             食材
           </label>
           <div
@@ -72,7 +72,7 @@ const InputDetail: React.FC<InputDetailProps> = ({
             {selectedIngredients.map((ingredient, index) => (
               <span
                 key={index}
-                className="inline-flex items-center bg-[#e7dacf] text-[#1b130d] rounded-full px-2 py-1 text-sm"
+                className="inline-flex items-center rounded-full bg-[#e7dacf] px-2 py-1 text-sm text-[#1b130d]"
               >
                 {ingredient}
                 <button
@@ -84,7 +84,7 @@ const InputDetail: React.FC<InputDetailProps> = ({
               </span>
             ))}
           </div>
-          <div className="flex items-center w-full relative">
+          <div className="relative flex w-full items-center">
             <input
               className="form-input w-full rounded-xl border border-[#e7dacf] p-2 text-sm focus:border-[#ee7f2b] focus:ring-[#ee7f2b]"
               placeholder="輸入食材"
@@ -100,7 +100,7 @@ const InputDetail: React.FC<InputDetailProps> = ({
                   setInputValue('');
                 }
               }}
-              className="absolute right-0 rounded-full text-[#ee7f2b] text-base font-bold"
+              className="absolute right-0 rounded-full text-base font-bold text-[#ee7f2b]"
               style={{
                 position: 'absolute',
                 zIndex: 2,
@@ -117,7 +117,7 @@ const InputDetail: React.FC<InputDetailProps> = ({
           </div>
         </div>
         <div className="mb-5">
-          <label className="block text-sm font-medium text-[#9a6e4c] mb-2">
+          <label className="mb-2 block text-sm font-medium text-[#9a6e4c]">
             菜系類型
           </label>
           <select
@@ -137,7 +137,7 @@ const InputDetail: React.FC<InputDetailProps> = ({
           </select>
         </div>
         <div className="mb-5">
-          <label className="block text-sm font-medium text-[#9a6e4c] mb-2">
+          <label className="mb-2 block text-sm font-medium text-[#9a6e4c]">
             菜餚數量
           </label>
           <input
@@ -149,7 +149,7 @@ const InputDetail: React.FC<InputDetailProps> = ({
           />
         </div>
         <div className="mb-5">
-          <label className="block text-sm font-medium text-[#9a6e4c] mb-2">
+          <label className="mb-2 block text-sm font-medium text-[#9a6e4c]">
             湯品數量
           </label>
           <input
@@ -161,7 +161,7 @@ const InputDetail: React.FC<InputDetailProps> = ({
           />
         </div>
         <div className="mb-5">
-          <label className="block text-sm font-medium text-[#9a6e4c] mb-2">
+          <label className="mb-2 block text-sm font-medium text-[#9a6e4c]">
             需要甜點嗎？
           </label>
           <select
@@ -173,9 +173,9 @@ const InputDetail: React.FC<InputDetailProps> = ({
           </select>
         </div>
       </div>
-      <div className="flex justify-center mt-6">
+      <div className="mt-6 flex justify-center">
         <button
-          className="bg-[#ee7f2b] text-[#1b130d] font-bold py-2 px-4 rounded-full hover:bg-[#f19a55] transition duration-300"
+          className="rounded-full bg-[#ee7f2b] px-4 py-2 font-bold text-[#1b130d] transition duration-300 hover:bg-[#f19a55]"
           onClick={generateRecipe}
         >
           生成食譜

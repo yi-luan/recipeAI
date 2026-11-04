@@ -3,13 +3,13 @@ import logo from '../../assets/RecipeAI-logo.png';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="navbar flex justify-between items-center p-4 gap-4 w-full text-black border-b border-gray-100 bg-white rounded-t-lg">
-      <div className="navbar-logo sm:ml-auto sm:mr-auto">
+    <nav className="navbar flex w-full items-center justify-between gap-4 rounded-t-lg border-b border-gray-100 bg-white p-4 text-black">
+      <div className="navbar-logo sm:mr-auto sm:ml-auto">
         <a href="/">
           <img
             src={logo}
             alt="Logo"
-            className="text-black no-underline text-2xl font-bold h-90px"
+            className="h-90px text-2xl font-bold text-black no-underline"
             style={{ height: '90px' }}
           />
         </a>
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
           variant="outlined"
           placeholder="Search..."
           size="small"
-          className="p-2 border-none rounded bg-[#F2EDE8] text-[#996E4D]"
+          className="p-2 border-none rounded-sm bg-[#F2EDE8] text-[#996E4D]"
           InputProps={{
             style: {
               color: '#996E4D',

@@ -6,12 +6,12 @@ const LayoutPage: React.FC = () => {
   return (
     <div
       style={{ backgroundColor: '#FCFAF7' }}
-      className="w-full m-auto h-screen flex justify-center items-center"
+      className="m-auto flex h-screen w-full items-center justify-center"
     >
-      <div className="bg-white w-full sm:w-11/12 mx-auto shadow-md rounded-lg flex flex-col h-full">
+      <div className="mx-auto flex h-full w-full flex-col rounded-lg bg-white shadow-md sm:w-11/12">
         <Navbar />
         <div
-          className="flex flex-col justify-center items-center overflow-y-scroll scrollbar-thin scrollbar-thumb-[#ee7f2b] scrollbar-track-white scroll-smooth custom-scrollbar"
+          className="custom-scrollbar flex scrollbar-thin scrollbar-thumb-[#ee7f2b] scrollbar-track-white flex-col items-center justify-center overflow-y-scroll scroll-smooth"
           style={{
             scrollMarginLeft: '1rem',
           }}

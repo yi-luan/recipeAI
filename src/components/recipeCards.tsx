@@ -16,11 +16,11 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({ recipes }) => {
   return (
     <div className="mt-10">
       {recipes.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pb-5">
+        <div className="grid grid-cols-1 gap-5 pb-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {recipes.map((recipe, index) => (
             <Card
               key={index}
-              className="rounded-lg flex flex-col"
+              className="flex flex-col rounded-lg"
               style={{
                 boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
                 height: '400px',
@@ -34,7 +34,7 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({ recipes }) => {
                 className="rounded-t-lg object-cover"
                 style={{ height: '200px' }}
               />
-              <CardContent className="flex-grow overflow-auto custom-scrollbar">
+              <CardContent className="custom-scrollbar grow overflow-auto">
                 <Typography gutterBottom variant="h6" component="div">
                   {recipe.name}
                 </Typography>
@@ -58,8 +58,8 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({ recipes }) => {
           ))}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-52">
-          <NoFoodIcon className="text-5xl text-[#9a6e4c] mr-2" />
+        <div className="flex h-52 items-center justify-center">
+          <NoFoodIcon className="mr-2 text-5xl text-[#9a6e4c]" />
           <Typography variant="h6" color="text.secondary" className="ml-2">
             沒有可用的食譜
           </Typography>

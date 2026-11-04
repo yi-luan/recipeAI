@@ -26,9 +26,9 @@ const MultiSelect: React.FC<MultiSelectProps> = ({ handleSearch }) => {
 
   return (
     <div className="multi-select w-full">
-      <div className="flex w-full items-stretch rounded-xl h-full relative">
+      <div className="relative flex h-full w-full items-stretch rounded-xl">
         <div
-          className="text-[#9a6e4c] flex-shrink-0 flex border border-[#e7dacf] bg-[#fcfaf8] items-center justify-center pl-[15px] rounded-l-xl border-r-0 pr-4"
+          className="flex shrink-0 items-center justify-center rounded-l-xl border border-r-0 border-[#e7dacf] bg-[#fcfaf8] pr-4 pl-[15px] text-[#9a6e4c]"
           data-icon="MagnifyingGlass"
           data-size="20px"
           data-weight="regular"
@@ -43,11 +43,11 @@ const MultiSelect: React.FC<MultiSelectProps> = ({ handleSearch }) => {
             <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path>
           </svg>
         </div>
-        <div className="flex-1 flex items-center border border-[#e7dacf] bg-[#fcfaf8] p-3 rounded-xl rounded-l-none rounded-r-none overflow-x-auto overflow-y-hidden  scrollbar-thin scrollbar-thumb-[#ee7f2b] scrollbar-track-white scroll-smooth custom-scrollbar">
+        <div className="custom-scrollbar flex flex-1 scrollbar-thin scrollbar-thumb-[#ee7f2b] scrollbar-track-white items-center overflow-x-auto overflow-y-hidden scroll-smooth rounded-xl rounded-l-none rounded-r-none border border-[#e7dacf] bg-[#fcfaf8] p-3">
           {items.map((item, index) => (
             <span
               key={index}
-              className="inline-flex items-center bg-[#e7dacf] text-[#1b130d] rounded-full px-2 py-1 text-sm mr-1 my-1 flex-shrink-0 scrollbar-thin"
+              className="my-1 mr-1 inline-flex shrink-0 scrollbar-thin items-center rounded-full bg-[#e7dacf] px-2 py-1 text-sm text-[#1b130d]"
             >
               {item}
               <button
@@ -60,15 +60,15 @@ const MultiSelect: React.FC<MultiSelectProps> = ({ handleSearch }) => {
           ))}
           <input
             placeholder={'Enter ingredients, recipes, or cuisines'}
-            className="flex-1 min-w-[50px] bg-transparent text-[#1b130d] focus:outline-none h-full placeholder:text-[#9a6e4c] px-2 text-sm font-normal leading-normal @[480px]:text-base @[480px]:font-normal @[480px]:leading-normal"
+            className="h-full min-w-[50px] flex-1 bg-transparent px-2 text-sm leading-normal font-normal text-[#1b130d] placeholder:text-[#9a6e4c] focus:outline-hidden @[480px]:text-base @[480px]:leading-normal @[480px]:font-normal"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
           />
         </div>
-        <div className="flex-shrink-0 flex items-center justify-center rounded-r-xl border-l-0 border border-[#e7dacf] bg-[#fcfaf8] pr-[1px]">
+        <div className="flex shrink-0 items-center justify-center rounded-r-xl border border-l-0 border-[#e7dacf] bg-[#fcfaf8] pr-[1px]">
           <button
-            className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-r-xl h-10 px-4 @[480px]:h-12 @[480px]:px-5 bg-[#ee7f2b] text-[#1b130d] text-sm font-bold leading-normal tracking-[0.015em] @[480px]:text-base @[480px]:font-bold @[480px]:leading-normal @[480px]:tracking-[0.015em]"
+            className="flex h-10 max-w-[480px] min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-r-xl bg-[#ee7f2b] px-4 text-sm leading-normal font-bold tracking-[0.015em] text-[#1b130d] @[480px]:h-12 @[480px]:px-5 @[480px]:text-base @[480px]:leading-normal @[480px]:font-bold @[480px]:tracking-[0.015em]"
             onClick={() => handleSearch(items)}
           >
             <span className="truncate">Search</span>
