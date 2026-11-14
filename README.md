@@ -2,7 +2,7 @@
 
 輸入冰箱裡現有的食材，選好菜系和道數，AI 就會設計一套只用這些食材的食譜。
 
-這個 repo 是前端，後端在 [recipeAIService](https://github.com/yi-luan/recipeAIService)。
+這個 repo 是前端。食譜來自 Go 檢索服務 [recipeCrawler](https://github.com/yi-luan/recipeCrawler)，菜色照片仍由 Node 後端 [recipeAIService](https://github.com/yi-luan/recipeAIService) 提供。
 
 線上版本：https://recipe-ai-gray.vercel.app
 
@@ -17,6 +17,8 @@
 - 用 Enter 或「+」把食材一個個加成標籤；標題列的搜尋框也能一次輸入多個食材
 - 可以選菜系，以及菜、湯的數量、要不要甜點
 - 每道菜都有食材清單和步驟，並自動配上菜色照片；找不到照片時改用預設圖
+- 來自真實食譜的菜附上原始食譜連結；純 AI 生成的菜會標示「AI 生成」。也會列出缺少的食材與替代建議、標出需另外準備的食材；步驟只能看原文時改顯示連結
+- 真實食譜不夠、補齊又失敗時，提示只找到幾道；搜尋服務故障時，提示目前是一般 AI 生成的結果
 - 載入中、沒有結果、發生錯誤時各有對應的畫面。錯誤畫面可以一鍵重試，也會分辨是「後端連不上」還是「伺服器回傳錯誤」
 - 支援手機版排版，可以用鍵盤操作
 
@@ -36,16 +38,20 @@ src/
 ## 開始使用
 
 ```bash
-cp .env.example .env   # 需要時修改 VITE_API_BASE_URL
+cp .env.example .env   # 需要時修改兩個後端網址
 npm install
 npm run dev            # http://localhost:5173
 ```
 
-需要同時啟動 [recipeAIService](https://github.com/yi-luan/recipeAIService)（預設 `http://localhost:3001`）。
+前端會呼叫兩個後端，需要同時啟動：
 
-| 變數                | 預設值                  | 說明         |
-| ------------------- | ----------------------- | ------------ |
-| `VITE_API_BASE_URL` | `http://localhost:3001` | 後端服務網址 |
+- 食譜：Go 檢索服務 [recipeCrawler](https://github.com/yi-luan/recipeCrawler)（預設 `http://localhost:8080`），提供 `POST /recipe/generateRecipe`。它的 `CORS_ALLOWED_ORIGINS` 要包含前端網址（例如 `http://localhost:5173`），否則瀏覽器會擋下請求。
+- 照片：Node 後端 [recipeAIService](https://github.com/yi-luan/recipeAIService)（預設 `http://localhost:3001`），提供 `GET /photo/dishPhoto/:dishName`。照片端點還沒搬到 Go 服務；連不上時卡片改用預設圖，不影響食譜。
+
+| 變數                       | 預設值                  | 說明                                   |
+| -------------------------- | ----------------------- | -------------------------------------- |
+| `VITE_RECIPE_API_BASE_URL` | `http://localhost:8080` | 食譜 API，Go 檢索服務（recipeCrawler） |
+| `VITE_API_BASE_URL`        | `http://localhost:3001` | 照片 API，Node 後端（recipeAIService） |
 
 ## 指令
 

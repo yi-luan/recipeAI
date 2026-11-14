@@ -5,11 +5,46 @@ import fallbackDishPhoto from '../../assets/ingredientPhoto.webp';
 import { GenerateRecipeRequest } from '../../DataTransfer/Recipe/GenerateRecipeRequest';
 import InputDetail from '../../components/inputDetail';
 import MultiSelect from '../../components/multiSelect';
-import RecipeCards, { RecipeCard } from '../../components/recipeCards';
+import { GenerateRecipeResult } from '../../DataTransfer/Recipe/GenerateRecipeResponse';
+import RecipeCards, {
+  RecipeCard,
+  RecipeNotice,
+} from '../../components/recipeCards';
 import { photoApi } from '../../https/photoApi';
 import { recipeApi } from '../../https/recipeApi';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
+
+const CATEGORY_LABELS: Record<string, string> = {
+  dish: '菜',
+  soup: '湯',
+  dessert: '甜點',
+};
+
+/** 把回應 header 帶來的資訊轉成卡片上方的提示；舊後端沒有這些 header 時回傳空陣列。 */
+const buildNotices = (result: GenerateRecipeResult): RecipeNotice[] => {
+  const notices: RecipeNotice[] = [];
+  const shortfallEntries = Object.entries(result.shortfall);
+  if (shortfallEntries.length > 0) {
+    const missingTotal = shortfallEntries.reduce((sum, [, n]) => sum + n, 0);
+    const detail = shortfallEntries
+      .map(
+        ([category, n]) => `${CATEGORY_LABELS[category] ?? category} ${n} 道`
+      )
+      .join('、');
+    notices.push({
+      type: 'warning',
+      message: `只找到 ${result.recipes.length} 道，其餘 ${missingTotal} 道生成失敗（${detail}）。`,
+    });
+  }
+  if (result.degraded) {
+    notices.push({
+      type: 'info',
+      message: '食譜搜尋服務暫時無法使用，目前顯示的是一般 AI 生成結果。',
+    });
+  }
+  return notices;
+};
 
 const getErrorMessage = (error: unknown): string => {
   if (isAxiosError(error)) {
@@ -25,6 +60,7 @@ const Content: React.FC = () => {
   const [recipes, setRecipes] = useState<RecipeCard[]>([]);
   const [status, setStatus] = useState<Status>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [notices, setNotices] = useState<RecipeNotice[]>([]);
   const [lastRequest, setLastRequest] = useState<GenerateRecipeRequest | null>(
     null
   );
@@ -50,23 +86,31 @@ const Content: React.FC = () => {
     setLastRequest(request);
     setStatus('loading');
     setErrorMessage(null);
+    setNotices([]);
     try {
-      const response = await recipeApi.generateRecipe(request);
+      const result = await recipeApi.generateRecipe(request);
       const recipeCards = await Promise.all(
-        response.map(async (recipe): Promise<RecipeCard> => {
+        result.recipes.map(async (recipe): Promise<RecipeCard> => {
           // A missing photo should not fail the whole result.
           const image = await photoApi
             .getDishPhoto(recipe.dishName)
             .catch(() => fallbackDishPhoto);
           return {
             name: recipe.dishName,
-            ingredients: recipe.ingredients.join(', '),
-            instructions: recipe.instructions,
+            ingredients: recipe.ingredients ?? [],
+            instructions: recipe.instructions ?? [],
             image: image || fallbackDishPhoto,
+            sourceUrl: recipe.sourceUrl,
+            generated: recipe.generated,
+            missingIngredients: recipe.missingIngredients,
+            substitutions: recipe.substitutions,
+            ingredientNotes: recipe.ingredientNotes,
+            instructionsNote: recipe.instructionsNote,
           };
         })
       );
       setRecipes(recipeCards);
+      setNotices(buildNotices(result));
       setStatus('success');
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
@@ -115,6 +159,7 @@ const Content: React.FC = () => {
           recipes={recipes}
           status={status}
           errorMessage={errorMessage}
+          notices={notices}
           expectedCount={
             lastRequest
               ? lastRequest.numberOfDishes +
